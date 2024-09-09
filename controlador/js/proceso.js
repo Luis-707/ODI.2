@@ -125,25 +125,56 @@ function mapArrayRepuesta(req){
   return respuesta;
 }
 
-function cargarVista(vista,idDivDondMuestraVista = 'contenedorCentroMain') { 
-  // Crear una nueva instancia de XMLHttpRequest
-  var xhr = new XMLHttpRequest();
+// function cargarVista(vista,idDivDondMuestraVista = 'contenedorCentroMain') { 
+//   // Crear una nueva instancia de XMLHttpRequest
+//   var xhr = new XMLHttpRequest();
   
-  // Configurar la solicitud con el método GET y la URL del archivo PHP
-  xhr.open('GET', vista, true);
+//   // Configurar la solicitud con el método GET y la URL del archivo PHP
+//   xhr.open('GET', vista, true);
   
-  // Configurar la función que se ejecutará cuando la solicitud cambie de estado
-  xhr.onreadystatechange = function() {
-      // Verificar si la solicitud se completó con éxito
-      if (xhr.readyState === 4 && xhr.status === 200) {
-          // Insertar el contenido del archivo PHP en el div con id idDivDondMuestraVista
-          document.getElementById(idDivDondMuestraVista).innerHTML = xhr.responseText;
-      }
-  };
+//   // Configurar la función que se ejecutará cuando la solicitud cambie de estado
+//   xhr.onreadystatechange = function() {
+//       // Verificar si la solicitud se completó con éxito
+//       if (xhr.readyState === 4 && xhr.status === 200) {
+//           // Insertar el contenido del archivo PHP en el div con id idDivDondMuestraVista
+//           document.getElementById(idDivDondMuestraVista).innerHTML = xhr.responseText;
+//       }
+//   };
   
-  // Enviar la solicitud
-  xhr.send();
+//   // Enviar la solicitud
+//   xhr.send();
+// }
+
+
+/**
+ * Función que permite mostrar las vistas en el cuerpo del sistema
+ * 
+ * @param {*} url_vista // url del archivo .php de la vista
+ * @param {*} cuerpo    // id del div o seccion de la plantilla en donde mostrar las vstas
+ */
+function cargarVista(url_vista, cuerpo = '#contenedorCentroMain')
+{
+
+  console.log(url_vista)
+
+	$(cuerpo).html("").hide(); // se limpia y se oculta momentaneamente el cuerpo del sistema
+
+	$(cuerpo).load(url_vista, function(response, status, xhr){ // funcion que se encarga de buscar el contenido del archivo
+		
+        // si ocurre un error al buscar la ruta muestra un alerta
+        if ( status == "error" ) {
+            var msg = "Ha ocurrido un error al cargar la vista: ";
+            alert(msg + xhr.status + " " + xhr.statusText) // alerta con el mensaje de error
+        }else{
+
+            // si todo esta correcto, se muestra nuevamente el cuerpo del sistema con la nueva vista
+            $(cuerpo).show();
+
+        }
+
+	});
 }
+
 
 /*console.log('data con formato formdata: ', formData)
 

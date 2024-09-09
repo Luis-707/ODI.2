@@ -4,7 +4,7 @@ function IngresarUsuario(){
     console.log('la inferfaz de actualizar datos cargo');
 
     //url base que direciona los servicios manejados por el controlador en ODI
-    const urlBase = 'http://localhost/ODI/controlador/?';
+    
 
     const servicio = 'IngresarUsuario';
 
@@ -32,22 +32,43 @@ function respuestaUsuario(respuestaServidor) {
 }
 
 function listarUser(){
-  cargarVista('vistas/listaUsuario.php');
-  procesar2('http://localhost/ODI/controlador/?Serv_listarUsuario','listarDeUsuario(respuestaServidor)');
+  cargarVista('vistas/Admin_Usuarios.php');
+  procesar('http://localhost/ODI/controlador/?ListarUsuario','listarDeUsuario(respuestaServidor)');
 }
 
 function listarDeUsuario(respuestaServidor){
   console.log(respuestaServidor);
-  var data = respuestaServidor[0];
-  $('#exampleTabla').DataTable( {
-    data: data,
-    columns: [
-        { data: 'id_usuario',title: 'CODIGO'  },
+  var datos = respuestaServidor[0];
+
+  if ($.fn.dataTable.isDataTable('#t_usuarios')) {
+        // Si la tabla ya está inicializada, actualiza sus datos
+        let table = $('#t_usuarios').DataTable();
+        table.clear();
+        table.rows.add(datos);
+        table.draw();
+    } else {
+  
+  $('#t_usuarios').DataTable({
+    data: datos,
+    "targets":-1,
+    "data":null,
+    "columnsDefs":[{
+    "defaultContent": 
+      "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'>edit</i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='material-icons'>delete</i></button></div></div>"
+
+  }],
+      columns: [
+        { data: 'usuario_idp',title: 'CODIGO'  },
         { data: 'nombre_usuario',title: 'NOMBRE' },
-        { data: 'categoria_usuario',title: 'CATEGORIA' },
-        { data: 'tipos_permisos_',title: 'PERMISO' }
+        { data: 'clave',title: 'CLAVE' },
+        { data: 'rol',title: 'ROL' },
+        { title: 'ACCIONES' }
       ]
-  } );
+  });
+
+    }
+
+  
 }
 
  

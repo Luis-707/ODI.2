@@ -11,18 +11,19 @@
 
  $respuesta = "";
  /* antes de guardar debes verificar si existe para saber si guardaras o no */
- $sql_1 = sprintf("SELECT * from usuario where id_usuario = %d",$dataCliente['_post']['id_usuario']);
+ $sql_1 = sprintf("SELECT * from usuarios where usuario_idp = %d",$dataCliente['_post']['usuario_idp']);
  $respuesta=$this->ejecutarConsultaBdds($sql_1);
  
  if (count($respuesta) > 0) {
     $respuesta = "usuario ya existe";
  }else{ /* si no existe lo guardo */
-    $sql = sprintf("INSERT INTO usuario (id_usuario, nombre_usuario, contrasena, categoria_usuario, tipos_permisos_) VALUES (%d, '%s', '%s', '%s', '%s')", 
-    $dataCliente['_post']['id_usuario'],
+    $sql = sprintf("INSERT INTO usuarios(usuario_idp,
+	nombre_usuario, clave, rol)VALUES (%d, '%s', '%d', '%s')", 
+   
+   $dataCliente['_post']['usuario_idp'],
     $dataCliente['_post']['nombre_usuario'],
-    $dataCliente['_post']['contrasena'],
-    $dataCliente['_post']['categoria_usuario'],
-    $dataCliente['_post']['tipos_permisos_']);
+    $dataCliente['_post']['clave'],
+    $dataCliente['_post']['rol']);
     $respuesta = $this->ejecutarConsultaBdds($sql);
 
     /* cosulto si se guardo */

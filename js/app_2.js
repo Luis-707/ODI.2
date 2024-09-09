@@ -1,14 +1,40 @@
-var boton=document.getElementById('agregar_obj');
-var guardar=document.getElementById('guardar_obj');
-var lista_obj=document.getElementById("lista_obj");
+$(document).ready(function(){
+
+  console.log('entro en vista de plantilla')
+
+
+  $("#agregar_obj").click(function(){
+    agregar_obj();
+  });
+
+  $("#guardar_obj").click(function(){
+    save_obj();
+
+  });
+
+    $("#agregar_comp").click(function(){
+      agregar_comp();
+    });
+  
+    $("#guardar_comp").click(function(){
+      save_comp();
+  });
+
+
+})
+
+// var boton=document.getElementById('agregar_obj');
+// var guardar=document.getElementById('guardar_obj');
+// var lista_obj=document.getElementById("lista_obj");
 
 var data_obj=[];
-boton.addEventListener("click",agregar_obj);
-guardar.addEventListener("click",save_obj);
+// boton.addEventListener("click",agregar_obj);
+// guardar.addEventListener("click",save_obj);
 
 var cant=0;
 
 function agregar_obj(){
+
     var nombre_obj=document.querySelector('#nombre_obj').value;
     var peso_obj=parseInt(document.querySelector('#peso_obj').value);
     var rango_obj=parseInt(document.querySelector('#rango_obj').value);
@@ -34,6 +60,8 @@ function agregar_obj(){
   sumar_todos();
   eliminar_obj(row);
 }
+
+ //Funcion para la opcion 'Eliminar' en tabla de objetivos
 function eliminar_obj(row) {
   return new Promise((resolve, reject) => {
     // Elimina la fila de la tabla
@@ -86,12 +114,12 @@ function save_obj(){
 
 //Elementos para la tabla de competencias
 
-var boton=document.getElementById('agregar_comp');
-var guardar_2=document.getElementById('guardar_comp');
-var lista_obj=document.getElementById("lista_comp");
+// var boton=document.getElementById('agregar_comp');
+// var guardar_2=document.getElementById('guardar_comp');
+// var lista_obj=document.getElementById("lista_comp");
 
-boton.addEventListener("click",agregar_comp);
-guardar_2.addEventListener("click",save_comp);
+// boton.addEventListener("click",agregar_comp);
+// guardar_2.addEventListener("click",save_comp);
 
 var data=[];
 var cant2=0;
@@ -123,6 +151,8 @@ function agregar_comp(){
     sumar_todos();
     eliminar_comp(row);
   }
+
+  //Funcion para la opcion 'Eliminar' en tabla de competencias
   function eliminar_comp(row) {
     return new Promise((resolve, reject) => {
       // Elimina la fila de la tabla
@@ -204,41 +234,4 @@ async function evaluarRendimiento(total) {
   });
 }
 
-sumar_todos().catch((error) => {
-  console.error("Error al mostrar el total:", error);
-});
-
-
-
-/*function evaluarRendimiento(total) {
-    if (total === 0) {
-        return "AÚN NO HA SIDO EVALUADO";
-    } else if (total <= 179) {
-        return "ACTUACIÓN MUY POR DEBAJO DE LO ESPERADO";
-    } else if (total <= 259) {
-        return "ACTUACIÓN POR DEBAJO DE LO ESPERADO";
-    } else if (total <= 339) {
-        return "ACTUACIÓN DENTRO DE LO ESPERADO";
-    } else if (total <= 419) {
-        return "ACTUACIÓN SOBRE LO ESPERADO";
-    } else if (total <= 500) {
-        return "DESEMPEÑO EXCEPCIONAL";
-    } else if(total > 500){
-        return "Valor fuera de rango";
-    }
-  }
-  
-  /* Función para actualizar los totales de la tercera tabla
-  function updateTotalScores() {
-    const totalTable1 = parseFloat(total_obj.textContent);
-    const totalTable2 = parseFloat(total_comp.textContent);
-    const total_AB = totalTable1 + totalTable2;
-  
-    puntuacionSeccionB.textContent = totalTable1.toFixed(2);
-    puntuacionSeccionC.textContent = totalTable2.toFixed(2);
-    puntuacionTotal.textContent = total_AB.toFixed(2);
-  
-    const rendimientoText = evaluarRendimiento(total_AB);
-    rendimiento.textContent = rendimientoText;
-  }*/
 
